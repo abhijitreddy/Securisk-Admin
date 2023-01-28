@@ -1,0 +1,69 @@
+<div class="login_container">
+    <div class="login">
+        <h5>{{isLogin ? 'Login' : 'Register'}}</h5>
+        <form [formGroup]="loginForm" (ngSubmit)="login()" *ngIf="isLogin">
+            <div class="form_control">
+                <label for="email">Email</label>
+                <input type="email" id="email" formControlName="email">
+                <div class="error" *ngIf="(loginForm.get('email')?.touched || loginForm.get('email')?.dirty) && loginForm.get('email')?.invalid && loginForm.get('email')?.errors">
+                    <span *ngIf="loginForm.get('email')?.errors?.required">Email is required</span>
+                    <span *ngIf="loginForm.get('email')?.errors?.email">Not a valid Email</span>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="password">Password</label>
+                <div style="position: relative;">
+                    <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password">
+                    <i class="fa {{showPassword ? 'fa-eye-slash' : 'fa-eye'}}" (click)="showPassword = !showPassword"></i>
+                </div>
+                <div class="error" *ngIf="(loginForm.get('password')?.touched || loginForm.get('password')?.dirty) && loginForm.get('password')?.invalid && loginForm.get('password')?.errors">
+                    <span *ngIf="loginForm.get('password')?.errors?.required">Password is required</span>
+                </div>
+            </div>
+            <p>Don't have account? <span (click)="isLogin = false;this.registerForm.reset();this.showPassword = false;">Register</span></p>
+            <button type="submit">Login</button>
+        </form>
+        <form [formGroup]="registerForm" (ngSubmit)="register()" *ngIf="!isLogin">
+            <div class="form_control">
+                <label for="email">Email</label>
+                <input type="email" id="email" formControlName="email">
+                <div class="error" *ngIf="(registerForm.get('email')?.touched || registerForm.get('email')?.dirty) && registerForm.get('email')?.invalid && registerForm.get('email')?.errors">
+                    <span *ngIf="registerForm.get('email')?.errors?.required">Email is required</span>
+                    <span *ngIf="registerForm.get('email')?.errors?.email">Not a valid Email</span>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="password">Password</label>
+                <div style="position: relative;">
+                    <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password">
+                    <i class="fa {{showPassword ? 'fa-eye-slash' : 'fa-eye'}}" (click)="showPassword = !showPassword"></i>
+                </div>
+                <div class="error" *ngIf="(registerForm.get('password')?.touched || registerForm.get('password')?.dirty) && registerForm.get('password')?.invalid && registerForm.get('password')?.errors">
+                    <span *ngIf="registerForm.get('password')?.errors?.required">Password is required</span>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="cfm_password">Confirm Password</label>
+                <div style="position: relative;">
+                    <input [type]="showCfmPassword ? 'text' : 'password'" id="cfm_password" formControlName="confirm_password">
+                    <i class="fa {{showCfmPassword ? 'fa-eye-slash' : 'fa-eye'}}" (click)="showCfmPassword = !showCfmPassword"></i>
+                </div>
+                <div class="error" *ngIf="(registerForm.get('confirm_password')?.touched || registerForm.get('confirm_password')?.dirty) && registerForm.get('confirm_password')?.invalid && registerForm.get('confirm_password')?.errors">
+                    <span *ngIf="registerForm.get('confirm_password')?.errors?.required">Confirm Password is required</span>
+                    <span *ngIf="registerForm.get('confirm_password')?.errors?.confirmedValidator">Confirm Password must match with the Password</span>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="user_type">User Type</label>
+                <select id="user_type" formControlName="user_type">
+                    <option value="admin">Admin</option>
+                </select>
+                <div class="error" *ngIf="(registerForm.get('user_type')?.touched || registerForm.get('user_type')?.dirty) && registerForm.get('user_type')?.invalid && registerForm.get('user_type')?.errors">
+                    <span *ngIf="registerForm.get('user_type')?.errors?.required">User Type is required</span>
+                </div>
+            </div>
+            <p>Already have account? <span (click)="isLogin = true;this.loginForm.reset();this.showPassword = false;">Login</span></p>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</div>

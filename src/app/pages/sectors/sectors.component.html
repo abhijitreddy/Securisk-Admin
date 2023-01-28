@@ -1,0 +1,69 @@
+<div class="sectors_container">
+    <div class="search_container">
+        <input type="text" placeholder="Search..." #search (keydown.enter)="onSearch(search.value)">
+    </div>
+    <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
+    <br><br><br>
+    <div class="form_container">
+        <h5>{{addEditLabel}} Sector</h5>
+        <form [formGroup]="sectorForm" (ngSubmit)="onSubmit()">
+            <div class="form_control">
+                <label for="name">Sector Name</label>
+                <input type="text" id="name" formControlName="name">
+                <div class="error" *ngIf="(sectorForm.get('name')?.touched || sectorForm.get('name')?.dirty) && sectorForm.get('name')?.invalid && sectorForm.get('name')?.errors">
+                    <span *ngIf="sectorForm.get('name')?.errors?.required">Name is required</span>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="description">Sector Description</label>
+                <textarea type="text" id="description" rows="10" formControlName="description"></textarea>
+                <div class="error" *ngIf="(sectorForm.get('description')?.touched || sectorForm.get('description')?.dirty) && sectorForm.get('description')?.invalid && sectorForm.get('description')?.errors">
+                    <span *ngIf="sectorForm.get('description')?.errors?.required">Description is required</span>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="image">Sector Image</label>
+                <input type="file" #sectorImg id="image" formControlName="image" (change)="uploadImg('selectedImage', $event)">
+                <div class="error" *ngIf="(sectorForm.get('image')?.touched || sectorForm.get('image')?.dirty) && sectorForm.get('image')?.invalid && sectorForm.get('image')?.errors">
+                    <span *ngIf="sectorForm.get('image')?.errors?.required">Name is required</span>
+                </div>
+                <div class="selected_img_preview" *ngIf="selectedImage && selectedImage.name">
+                    <div class="name">Sector Image</div>
+                    <div class="icons">
+                        <i class='fas fa-eye' (click)="previewImage('selectedImage')"></i>
+                        <i class='fas fa-times' (click)="sectorImg.value = '';removeImage('selectedImage')"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="icon">Sector Icon</label>
+                <input type="file" #sectorIcon id="icon" formControlName="icon" (change)="uploadImg('selectedIcon', $event)">
+                <div class="error" *ngIf="(sectorForm.get('icon')?.touched || sectorForm.get('icon')?.dirty) && sectorForm.get('icon')?.invalid && sectorForm.get('icon')?.errors">
+                    <span *ngIf="sectorForm.get('icon')?.errors?.required">Name is required</span>
+                </div>
+                <div class="selected_img_preview" *ngIf="selectedIcon && selectedIcon.name">
+                    <div class="name">Sector Icon</div>
+                    <div class="icons">
+                        <i class='fas fa-eye' (click)="previewImage('selectedIcon')"></i>
+                        <i class='fas fa-times' (click)="sectorIcon.value = '';removeImage('selectedIcon')"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="bannerImage">Sector Banner Image</label>
+                <input type="file" #sectorBanImg id="bannerImage" formControlName="bannerImage" (change)="uploadImg('selectedBannerImage', $event)">
+                <div class="error" *ngIf="(sectorForm.get('bannerImage')?.touched || sectorForm.get('bannerImage')?.dirty) && sectorForm.get('bannerImage')?.invalid && sectorForm.get('bannerImage')?.errors">
+                    <span *ngIf="sectorForm.get('bannerImage')?.errors?.required">Name is required</span>
+                </div>
+                <div class="selected_img_preview" *ngIf="selectedBannerImage && selectedBannerImage.name">
+                    <div class="name">Sector Banner Image</div>
+                    <div class="icons">
+                        <i class='fas fa-eye' (click)="previewImage('selectedBannerImage')"></i>
+                        <i class='fas fa-times' (click)="sectorBanImg.value = '';removeImage('selectedBannerImage')"></i>
+                    </div>
+                </div>
+            </div>
+            <button type="submit">Save & Update</button>
+        </form>
+    </div>
+</div>

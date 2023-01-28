@@ -1,0 +1,76 @@
+<div class="leadership_container">
+    <div class="search_container">
+        <input type="text" placeholder="Search..." #search (keydown.enter)="onSearch(search.value)">
+    </div>
+    <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
+    <br><br><br>
+    <div class="form_container">
+        <h5>{{addEditLabel}} Member</h5>
+        <form [formGroup]="memberForm" (ngSubmit)="onSubmit()">
+            <div class="form_control">
+                <label for="name">Name</label>
+                <input type="text" id="name" formControlName="name">
+                <div class="error" *ngIf="(memberForm.get('name')?.touched || memberForm.get('name')?.dirty) && memberForm.get('name')?.invalid && memberForm.get('name')?.errors">
+                    <span *ngIf="memberForm.get('name')?.errors?.required">Name is required</span>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="designation">Designation</label>
+                <input type="text" id="designation" formControlName="designation">
+                <div class="error" *ngIf="(memberForm.get('designation')?.touched || memberForm.get('designation')?.dirty) && memberForm.get('designation')?.invalid && memberForm.get('designation')?.errors">
+                    <span *ngIf="memberForm.get('designation')?.errors?.required">Designation is required</span>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="prod_desc">Description</label>
+                <textarea type="text" id="prod_desc" rows="10" formControlName="description"></textarea>
+                <div class="error" *ngIf="(memberForm.get('description')?.touched || memberForm.get('description')?.dirty) && memberForm.get('description')?.invalid && memberForm.get('description')?.errors">
+                    <span *ngIf="memberForm.get('description')?.errors?.required">Description is required</span>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="profile_img">Profile Image</label>
+                <input type="file" accept=".png,.jpg,.jpeg" #profileImg id="profile_img" formControlName="profile_img" (change)="uploadImg($event)" [disabled]="selectedProfileImg && selectedProfileImg.name">
+                <div class="error" *ngIf="(memberForm.get('profile_img')?.touched || memberForm.get('profile_img')?.dirty) && memberForm.get('profile_img')?.invalid && memberForm.get('profile_img')?.errors">
+                    <span *ngIf="memberForm.get('profile_img')?.errors?.required">Image is required</span>
+                </div>
+                <div class="selected_img_preview" *ngIf="selectedProfileImg && selectedProfileImg.name">
+                    <div class="name">{{selectedProfileImg.name}}</div>
+                    <div class="icons">
+                        <i class='fas fa-eye' (click)="previewImg()"></i>
+                        <i class='fas fa-times' (click)="profileImg.value = '';removeImg()"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="fb_link">Facebook Link</label>
+                <input type="text" id="fb_link" formControlName="fb_link">
+                <div class="error" *ngIf="(memberForm.get('fb_link')?.touched || memberForm.get('fb_link')?.dirty) && memberForm.get('fb_link')?.invalid && memberForm.get('fb_link')?.errors">
+                    <span *ngIf="memberForm.get('fb_link')?.errors?.required">Facebook Link is required</span>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="insta_link">Instagram Link</label>
+                <input type="text" id="insta_link" formControlName="insta_link">
+                <div class="error" *ngIf="(memberForm.get('insta_link')?.touched || memberForm.get('insta_link')?.dirty) && memberForm.get('insta_link')?.invalid && memberForm.get('insta_link')?.errors">
+                    <span *ngIf="memberForm.get('insta_link')?.errors?.required">Instagram Link is required</span>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="twitter_link">Twitter Link</label>
+                <input type="text" id="twitter_link" formControlName="twitter_link">
+                <div class="error" *ngIf="(memberForm.get('twitter_link')?.touched || memberForm.get('twitter_link')?.dirty) && memberForm.get('twitter_link')?.invalid && memberForm.get('twitter_link')?.errors">
+                    <span *ngIf="memberForm.get('twitter_link')?.errors?.required">Twitter Link is required</span>
+                </div>
+            </div>
+            <div class="form_control">
+                <label for="youtube_link">Youtube Link</label>
+                <input type="text" id="youtube_link" formControlName="youtube_link">
+                <div class="error" *ngIf="(memberForm.get('youtube_link')?.touched || memberForm.get('youtube_link')?.dirty) && memberForm.get('youtube_link')?.invalid && memberForm.get('youtube_link')?.errors">
+                    <span *ngIf="memberForm.get('youtube_link')?.errors?.required">Youtube Link is required</span>
+                </div>
+            </div>
+            <button type="submit">Save & Update</button>
+        </form>
+    </div>
+</div>

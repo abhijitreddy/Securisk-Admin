@@ -1,0 +1,23 @@
+<div class="sidebar_container">
+    <div class="logo_container">
+        <app-logo></app-logo>
+    </div>
+    <div class="nav_container">
+        <ul>
+            <li [routerLink]="['/admin/about-us']" routerLinkActive="active" (click)="onNavClick('About Us')">About Us</li>
+            <li [routerLink]="['/admin/leadership-team']" routerLinkActive="active" (click)="onNavClick('Leadership Team')">Leadership Team</li>
+            <li [routerLink]="['/admin/sectors']" routerLinkActive="active" (click)="onNavClick('Sectors')">Sectors</li>
+            <li [routerLink]="['/admin/products']" routerLinkActive="active" (click)="onNavClick('Products')">Products</li>
+            <li [routerLink]="['/admin/services']" routerLinkActive="active" (click)="onNavClick('Services')">Services</li>
+            <li [routerLink]="['/admin/address']" routerLinkActive="active" (click)="onNavClick('Address')">Address</li>
+            <li [routerLink]="['/admin/footer']" routerLinkActive="active" (click)="onNavClick('Footer')">Footer</li>
+            <li [routerLink]="['/admin/terms']" routerLinkActive="active" (click)="onNavClick('Terms & Conditions')">Terms & Conditions</li>
+            <li [routerLink]="['/admin/disclaimer']" routerLinkActive="active" (click)="onNavClick('Disclaimer')">Disclaimer</li>
+            <li [routerLink]="['/admin/privacy']" routerLinkActive="active" (click)="onNavClick('Privacy & Security')">Privacy & Security</li>
+            <li [routerLink]="['/admin/disclosuer']" routerLinkActive="active" (click)="onNavClick('Website Disclosure')">Website Disclosure</li>
+            <li [routerLink]="['/admin/cookies']" routerLinkActive="active" (click)="onNavClick('Cookies')">Cookies</li>
+            <li [routerLink]="['/admin/customer-grievence']" routerLinkActive="active" (click)="onNavClick('Customer Grievance Redressal')">Customer Grievance Redressal</li>
+            <li [routerLink]="['/admin/code-of-conduct']" routerLinkActive="active" (click)="onNavClick('Code of Conduct')">Code of Conduct</li>
+        </ul>
+    </div>
+</div>

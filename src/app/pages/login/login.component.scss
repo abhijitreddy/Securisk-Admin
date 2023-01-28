@@ -1,0 +1,128 @@
+.login_container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    &::before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-image: url('https://firebasestorage.googleapis.com/v0/b/juteproducts.appspot.com/o/securisk%2Fcarousel%2Flanding_carousel_9.jpeg?alt=media&token=bccd36cf-1477-48c6-a2d5-064723cdf34a');
+        // background-image: url('https://firebasestorage.googleapis.com/v0/b/juteproducts.appspot.com/o/securisk%2Fcarousel%2Flanding_carousel_5.jpeg?alt=media&token=2dbeceed-0fc3-47ab-81bc-b69255e1f7b5');
+        // background-image: url('https://firebasestorage.googleapis.com/v0/b/juteproducts.appspot.com/o/securisk%2Fcarousel%2Flanding_carousel_4.jpeg?alt=media&token=36942ff5-e201-47a4-a457-3ec65b76916f');
+        // background-image: url('https://firebasestorage.googleapis.com/v0/b/juteproducts.appspot.com/o/securisk%2Fcarousel%2Flanding_carousel_3.jpeg?alt=media&token=f12f58a4-3ef0-48fa-8d5a-6751cc9698ce');
+        // background-image: url('https://firebasestorage.googleapis.com/v0/b/juteproducts.appspot.com/o/securisk%2Fcarousel%2Flanding_carousel_2.jpeg?alt=media&token=cdac1662-ca55-4b5a-b160-76e138488b73');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        opacity: .4;
+        z-index: -2;
+    }
+    .login {
+        min-width: 430px;
+        padding: 20px;
+        box-sizing: border-box;
+        border: 1px solid rgba(0, 0, 0, .25);
+        border-radius: 3px;
+        background-color: #fff;
+        h5 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #8a3265;
+            margin-bottom: 30px;
+        }
+        p {
+            font-size: 14px;
+            display: flex;
+            gap: 10px;
+            span {
+                color: #8a3265;
+                font-weight: 500;
+                cursor: pointer;
+            }
+        }
+        form {
+            width: 100%;
+            .form_control {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                margin-bottom: 15px;
+                label {
+                    font-size: 15px;
+                    font-weight: normal;
+                    margin-left: 5px;
+                }
+                input, select {
+                    width: 100%;
+                    outline: none;
+                    border: 1px solid #d4d5d9;
+                    border-radius: 5px;
+                    padding: 0 10px;
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #454545;
+                    box-sizing: border-box;
+                    &:focus {
+                        box-shadow: 0 0 3px 2px rgba(133, 50, 98, .7);
+                    }
+                }
+                input, select {
+                    height: 40px;
+                }
+                i {
+                    position: absolute;
+                    top: 12px;
+                    right: 15px;
+                    color: #454545;
+                    cursor: pointer;
+                }
+                .error {
+                    font-size: 13px;
+                    color: #ef0000;
+                    font-weight: 400;
+                }
+            }
+            button {
+                border: none;
+                outline: none;
+                padding: 12px 26px;
+                margin: 25px auto 0;
+                color: #fff;
+                background: #8a3265;
+                border-radius: 20px;
+                font-size: 15px;
+                font-weight: 500;
+                display: block;
+                cursor: pointer;
+            }
+            .selected_img_preview {
+                padding: 15px 20px;
+                border: 1px solid #e4e5e9;
+                border-radius: 10px;
+                box-shadow: 1px 1px 6px rgb(0 0 0 / 20%);
+                display: flex;
+                justify-content: space-between;
+                .icons {
+                    display: flex;
+                    gap: 25px;
+                    i {
+                        cursor: pointer;
+                    }
+                    .fa-eye {
+                        color: #8a3265;
+                    }
+                    .fa-times {
+                        color: #ec2525;
+                    }
+                }
+            }
+        }
+    }
+}

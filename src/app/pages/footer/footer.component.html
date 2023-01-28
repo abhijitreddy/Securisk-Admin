@@ -1,0 +1,33 @@
+<div class="footer_container">
+    <form [formGroup]="footerForm" (ngSubmit)="onSubmit()">
+        <div class="form_control">
+            <label for="data">Copy Right Text</label>
+            <ckeditor id="data" [editor]="Editor" formControlName="data"></ckeditor>
+            <div class="error" *ngIf="(footerForm.get('data')?.touched || footerForm.get('data')?.dirty) && footerForm.get('data')?.invalid && footerForm.get('data')?.errors">
+                <span *ngIf="footerForm.get('data')?.errors?.required">Copy Right Text is required</span>
+            </div>
+        </div>
+        <div class="form_control">
+            <label for="fb_link">Facebook Link</label>
+            <input type="text" id="fb_link" formControlName="fb_link">
+            <div class="error" *ngIf="(footerForm.get('fb_link')?.touched || footerForm.get('fb_link')?.dirty) && footerForm.get('fb_link')?.invalid && footerForm.get('fb_link')?.errors">
+                <span *ngIf="footerForm.get('fb_link')?.errors?.required">Facebook Link is required</span>
+            </div>
+        </div>
+        <div class="form_control">
+            <label for="twitter_link">Twitter Link</label>
+            <input type="text" id="twitter_link" formControlName="twitter_link">
+            <div class="error" *ngIf="(footerForm.get('twitter_link')?.touched || footerForm.get('twitter_link')?.dirty) && footerForm.get('twitter_link')?.invalid && footerForm.get('twitter_link')?.errors">
+                <span *ngIf="footerForm.get('twitter_link')?.errors?.required">Twitter Link is required</span>
+            </div>
+        </div>
+        <div class="form_control">
+            <label for="youtube_link">Youtube Link</label>
+            <input type="text" id="youtube_link" formControlName="youtube_link">
+            <div class="error" *ngIf="(footerForm.get('youtube_link')?.touched || footerForm.get('youtube_link')?.dirty) && footerForm.get('youtube_link')?.invalid && footerForm.get('youtube_link')?.errors">
+                <span *ngIf="footerForm.get('youtube_link')?.errors?.required">Youtube Link is required</span>
+            </div>
+        </div>
+        <div class="button"><button type="submit">Save</button></div>
+    </form>
+</div>

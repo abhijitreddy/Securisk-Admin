@@ -1,0 +1,18 @@
+<div class="admin_container">
+    <div class="sidebar">
+        <app-sidebar [selectedNav]="selectedNav" (navChange)="onNavChange($event)"></app-sidebar>
+    </div>
+    <div class="main_container">
+        <header>
+            {{selectedNav}}
+            <div class="profile">
+                {{user?.email}}
+                <img src="https://www.pngall.com/wp-content/uploads/5/Profile-PNG-File.png" alt="">
+                <div class="menu">
+                    <a (click)="logout()">Logout</a>
+                </div>
+            </div>
+        </header>
+        <router-outlet></router-outlet>
+    </div>
+</div>
