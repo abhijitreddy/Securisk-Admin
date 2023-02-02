@@ -2,6 +2,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Component, OnInit } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-about-us',
@@ -13,7 +14,7 @@ export class AboutUsComponent implements OnInit {
   public data: any = '';
   public id: any = '';
 
-  constructor(private afs: AngularFirestore, private spinner: NgxSpinnerService) { }
+  constructor(private afs: AngularFirestore, private spinner: NgxSpinnerService, private toastr: ToastrService) { }
 
   async ngOnInit() {
       await this.getAboutUs();
@@ -36,13 +37,15 @@ export class AboutUsComponent implements OnInit {
         this.afs.collection('aboutUs').doc(this.id).update(reqData).then(async res => {
           await this.getAboutUs();
           this.spinner.hide();
-        });
+          this.toastr.success('About us updated successfully', 'Successful');
+        }).catch(err => this.toastr.error(err.message, 'Error'));
       } else {
         this.spinner.show();
         this.afs.collection('aboutUs').add(reqData).then(async res => {
           await this.getAboutUs();
           this.spinner.hide();
-        });
+          this.toastr.success('About us added successfully', 'Successful');
+        }).catch(err => this.toastr.error(err.message, 'Error'));
       }
     }
   }

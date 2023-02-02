@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -13,7 +14,7 @@ export class TermsComponent implements OnInit {
   public data: any = '';
   public id: any = '';
 
-  constructor(private afs: AngularFirestore, private spinner: NgxSpinnerService) { }
+  constructor(private afs: AngularFirestore, private spinner: NgxSpinnerService, private toastr: ToastrService) { }
 
   async ngOnInit() {
       await this.getTerms();
@@ -36,13 +37,21 @@ export class TermsComponent implements OnInit {
         this.afs.collection('terms').doc(this.id).update(reqData).then(async res => {
           await this.getTerms();
           this.spinner.hide();
-        }).catch(err => this.spinner.hide());
+          this.toastr.success('Terms updated successfully', 'Successful');
+        }).catch(err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'Error');
+        });
       } else {
         this.spinner.show();
         this.afs.collection('terms').add(reqData).then(async res => {
           await this.getTerms();
           this.spinner.hide();
-        }).catch(err => this.spinner.hide());
+          this.toastr.success('Terms added successfully', 'Successful');
+        }).catch(err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'Error');
+        });
       }
     }
   }

@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from './../../services/auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit {
     private afs: AngularFirestore, 
     private authService: AuthService, 
     private router: Router,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService
   ) { 
     this.loginForm = this.fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -82,6 +84,7 @@ export class LoginComponent implements OnInit {
         })
         .catch((err) => {
           this.spinner.hide();
+          this.toastr.error(err.message, 'Error');
           console.log(err.message);
         });
     }
@@ -108,10 +111,12 @@ export class LoginComponent implements OnInit {
           })
         }).catch(err => {
           console.log(err.message);
+          this.toastr.error(err.message, 'Error');
           this.spinner.hide();
         });
       }).catch(err => {
         console.log(err.message);
+        this.toastr.error(err.message, 'Error');
         this.spinner.hide();
       });
     }

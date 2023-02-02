@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -13,7 +14,7 @@ export class PrivacyComponent implements OnInit {
   public data: any = '';
   public id: any = '';
 
-  constructor(private afs: AngularFirestore, private spinner: NgxSpinnerService) { }
+  constructor(private afs: AngularFirestore, private spinner: NgxSpinnerService, private toastr: ToastrService) { }
 
   async ngOnInit() {
       await this.getPrivacy();
@@ -36,13 +37,21 @@ export class PrivacyComponent implements OnInit {
         this.afs.collection('privacy').doc(this.id).update(reqData).then(async res => {
           await this.getPrivacy();
           this.spinner.hide();
-        }).catch(err => this.spinner.hide());
+          this.toastr.success('Privacy details updated successfully', 'Successful');
+        }).catch(err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'Error');
+        });
       } else {
         this.spinner.show();
         this.afs.collection('privacy').add(reqData).then(async res => {
           await this.getPrivacy();
           this.spinner.hide();
-        }).catch(err => this.spinner.hide());
+          this.toastr.success('Privacy details added successfully', 'Successful');
+        }).catch(err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'Error');
+        });
       }
     } else {
 

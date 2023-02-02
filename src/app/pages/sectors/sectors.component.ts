@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -63,9 +64,9 @@ export class SectorsComponent implements OnInit {
             this.selectedIcon = res.icon;
             this.selectedBannerImage = res.bannerImage;
 
-            this.sectorForm.controls['image'].disable();
-            this.sectorForm.controls['icon'].disable();
-            this.sectorForm.controls['bannerImage'].disable();
+            if (this.selectedImage && this.selectedImage.name) this.sectorForm.controls['image'].disable();
+            if (this.selectedIcon && this.selectedIcon.name) this.sectorForm.controls['icon'].disable();
+            if (this.selectedBannerImage && this.selectedBannerImage.name) this.sectorForm.controls['bannerImage'].disable();
           });
           instance.onDelete.subscribe(async res => await this.delete(res.id));
         }
@@ -90,7 +91,7 @@ export class SectorsComponent implements OnInit {
   public selectedIcon: any = {};
   public selectedBannerImage: any = {};
 
-  constructor(private fb: FormBuilder, private afs: AngularFirestore, private storage: AngularFireStorage, private spinner: NgxSpinnerService) { 
+  constructor(private fb: FormBuilder, private afs: AngularFirestore, private storage: AngularFireStorage, private spinner: NgxSpinnerService, private toastr: ToastrService) { 
     this.sectorForm = this.fb.group({
       name: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
@@ -130,7 +131,11 @@ export class SectorsComponent implements OnInit {
     this.afs.collection('sectors').doc(id).delete().then(async res => {
       await this.getSectors();
       this.spinner.hide();
-    }).catch(err => this.spinner.hide());
+      this.toastr.success('Sector deleted successfully', 'Successful');
+    }).catch(err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'Error');
+    });
   }
 
   onSearch(query: string = '') {
@@ -169,7 +174,7 @@ export class SectorsComponent implements OnInit {
     let file = event.target.files[0];
     let extension = file.name.split('.')[1];
     console.log(file);
-    let ref = this.storage.ref(`sectors/${this.sectorForm.controls['name'].value ? (this.sectorForm.controls['name'].value.replace(' ', "") + name.split('selected')[1] + extension) : file.name}`);
+    let ref = this.storage.ref(`sectors/${this.sectorForm.controls['name'].value ? (this.sectorForm.controls['name'].value.replace(' ', "") + name.split('selected')[1] + '.' + extension) : file.name}`);
     this.spinner.show();
     ref.put(file).then(async (uploadedData) => {
       this.spinner.hide();
@@ -180,6 +185,11 @@ export class SectorsComponent implements OnInit {
         fileUrl: downloadUrl
       };
       this.sectorForm.controls[controlName].disable();
+      this.toastr.success('Image uploaded successfully', 'Successful');
+    }).catch(err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'Error');
+      this.sectorForm.controls[controlName].reset();
     })
   }
 
@@ -211,7 +221,11 @@ export class SectorsComponent implements OnInit {
           this.sectorForm.controls['bannerImage'].enable();
           await this.getSectors();
           this.spinner.hide();
-        }).catch(err => this.spinner.hide());
+          this.toastr.success('Sector updated successfully', 'Successful');
+        }).catch(err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'Error');
+        });
       } else {
         this.spinner.show();
         this.afs.collection('sectors').add(reqData).then(async (res) => {
@@ -224,7 +238,11 @@ export class SectorsComponent implements OnInit {
           this.sectorForm.controls['bannerImage'].enable();
           await this.getSectors();
           this.spinner.hide();
-        }).catch(err => this.spinner.hide());
+          this.toastr.success('Sector added successfully', 'Successful');
+        }).catch(err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'Error');
+        });
       }
     }
   }

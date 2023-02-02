@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -49,7 +50,7 @@ export class ProductsComponent implements OnInit {
 
             this.productIcon = res.icon;
 
-            if (this.productIcon.name)
+            if (this.productIcon && this.productIcon.name)
               this.productForm.controls['icon'].disable();
           });
           instance.onDelete.subscribe(res => console.log('Delete', res));
@@ -75,7 +76,7 @@ export class ProductsComponent implements OnInit {
   public sectors: any[] = [];
   public productIcon: any = {};
 
-  constructor(private fb: FormBuilder, private afs: AngularFirestore, private storage: AngularFireStorage, private spinner: NgxSpinnerService) { 
+  constructor(private fb: FormBuilder, private afs: AngularFirestore, private storage: AngularFireStorage, private spinner: NgxSpinnerService, private toastr: ToastrService) { 
     this.productForm = this.fb.group({
       name: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
@@ -135,6 +136,7 @@ export class ProductsComponent implements OnInit {
     this.afs.collection('products').doc(id).delete().then(async res => {
       await this.getProducts();
       this.spinner.hide();
+      this.toastr.success('Product deleted successfully', 'Successful');
     })
   }
 
@@ -174,7 +176,7 @@ export class ProductsComponent implements OnInit {
     let file = event.target.files[0];
     let extension = file.name.split('.')[1];
     console.log(file);
-    let ref = this.storage.ref(`products/${this.productForm.controls['name'].value ? (this.productForm.controls['name'].value.replace(' ', "") + extension) : file.name}`);
+    let ref = this.storage.ref(`products/${this.productForm.controls['name'].value ? (this.productForm.controls['name'].value.replace(' ', "") + '.' + extension) : file.name}`);
     this.spinner.show();
     ref.put(file).then(async (uploadedData) => {
       this.spinner.hide();
@@ -186,7 +188,12 @@ export class ProductsComponent implements OnInit {
       };
       if (this.productIcon.name)
         this.productForm.controls['icon'].disable();
-    }).catch(err => this.spinner.hide())
+      this.toastr.success('Image uploaded successfully', 'Successful');
+    }).catch(err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'Error');
+      this.productForm.controls['icon'].reset();
+    })
   }
   
   onSubmit() {
@@ -214,7 +221,11 @@ export class ProductsComponent implements OnInit {
           this.productIcon = {};
           this.productForm.controls['icon'].enable();
           await this.getProducts();
-        }).catch(err => this.spinner.hide());
+          this.toastr.success('Product updated successfully', 'Successful');
+        }).catch(err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'Error');
+        });
       } else {
         this.spinner.hide();
         this.afs.collection('products').add(reqData).then(async (res) => {
@@ -222,8 +233,11 @@ export class ProductsComponent implements OnInit {
           this.productIcon = {};
           this.productForm.controls['icon'].enable();
           await this.getProducts();
+          this.toastr.success('Product added successfully', 'Successful');
+        }).catch(err => {
           this.spinner.hide();
-        }).catch(err => this.spinner.hide());
+          this.toastr.error(err.message, 'Error');
+        });
       }
     }
   }

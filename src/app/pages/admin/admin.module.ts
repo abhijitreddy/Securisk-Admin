@@ -1,3 +1,4 @@
+import { ToastrModule } from 'ngx-toastr';
 import { ComponentsModule } from './../../components/components.module';
 import { SidebarComponent } from './../../components/sidebar/sidebar.component';
 import { AdminRoutingModule } from './admin-routing.module';
@@ -16,7 +17,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     CommonModule,
     AdminRoutingModule,
     ComponentsModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    ToastrModule
   ]
 })
 export class AdminModule { }

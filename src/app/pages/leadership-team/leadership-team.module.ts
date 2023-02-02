@@ -1,3 +1,4 @@
+import { ToastrModule } from 'ngx-toastr';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { LeadershipTeamRoutingModule } from './leadership-team-routing.module';
@@ -22,7 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    ToastrModule
   ]
 })
 export class LeadershipTeamModule { }

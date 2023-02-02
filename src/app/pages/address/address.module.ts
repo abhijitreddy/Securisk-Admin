@@ -1,3 +1,4 @@
+import { ToastrModule } from 'ngx-toastr';
 import { AddressRoutingModule } from './address-routing.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgModule } from '@angular/core';
@@ -19,7 +20,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     FormsModule,
     ReactiveFormsModule,
     Ng2SmartTableModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    ToastrModule
   ]
 })
 export class AddressModule { }

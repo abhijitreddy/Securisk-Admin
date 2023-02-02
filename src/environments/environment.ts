@@ -5,13 +5,13 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyDu2xQDbuL5v5Lm8nJJ_fwfoJwSr4dmnjE",
-    authDomain: "securisk-iwms.firebaseapp.com",
-    projectId: "securisk-iwms",
-    storageBucket: "securisk-iwms.appspot.com",
-    messagingSenderId: "1054144264004",
-    appId: "1:1054144264004:web:830a7b558f3c346106c911",
-    measurementId: "G-6BX3T9VPVT"
+    apiKey: "AIzaSyCBsiS1C4z0nHx0un6SfMcunQqUI1d5k5o",
+    authDomain: "securisk-3715f.firebaseapp.com",
+    projectId: "securisk-3715f",
+    storageBucket: "securisk-3715f.appspot.com",
+    messagingSenderId: "329934647110",
+    appId: "1:329934647110:web:d4ba155927e4bda957ff47",
+    measurementId: "G-TREJ4HTPT4"
   }
 };
 

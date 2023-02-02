@@ -1,3 +1,4 @@
+import { ToastrModule } from 'ngx-toastr';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ProductsRoutingModule } from './products-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +21,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     FormsModule,
     ReactiveFormsModule,
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    ToastrModule
   ],
   exports: []
 })

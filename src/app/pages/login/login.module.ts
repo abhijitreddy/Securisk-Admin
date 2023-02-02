@@ -1,3 +1,4 @@
+import { ToastrModule } from 'ngx-toastr';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginRoutingModule } from './login-routing.module';
@@ -18,7 +19,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     FormsModule,
     ReactiveFormsModule,
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    ToastrModule
   ]
 })
 export class LoginModule { }

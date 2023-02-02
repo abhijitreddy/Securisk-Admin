@@ -1,3 +1,4 @@
+import { ToastrModule } from 'ngx-toastr';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { SectorsRoutingModule } from './sectors-routing.module';
@@ -21,7 +22,8 @@ import { SectorsComponent, SectorsActionComponent } from './sectors.component';
     FormsModule,
     ReactiveFormsModule,
     AngularFireStorageModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    ToastrModule
   ]
 })
 export class SectorsModule { }

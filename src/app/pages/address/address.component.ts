@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -69,7 +70,7 @@ export class AddressComponent implements OnInit {
   public addEditLabel: string = 'Add New';
   public editId: string = '';
   public addresses: any[] = [];
-  constructor(private fb: FormBuilder, private afs: AngularFirestore, private spinner: NgxSpinnerService) { 
+  constructor(private fb: FormBuilder, private afs: AngularFirestore, private spinner: NgxSpinnerService, private toastr: ToastrService) { 
     this.addressForm = this.fb.group({
       branchName: new FormControl('', [Validators.required]),
       branchAddress: new FormControl('', [Validators.required]),
@@ -145,7 +146,8 @@ export class AddressComponent implements OnInit {
     this.afs.collection('Address').doc(id).delete().then(async res => {
       await this.getAdresses();
       this.spinner.hide();
-    });
+      this.toastr.success('Address deleted successfully!', 'Successful');
+    }).catch(err => this.toastr.error(err.message, 'Error'));
   }
 
   onSubmit() {
@@ -177,14 +179,16 @@ export class AddressComponent implements OnInit {
           this.addressForm.reset();
           await this.getAdresses();
           this.spinner.hide();
-        });
+          this.toastr.success('Address updated successfully', 'Successful');
+        }).catch(err => this.toastr.error(err.message, 'Error'));
       } else {
         this.spinner.show();
         this.afs.collection('Address').add(reqData).then(async res => {
           this.addressForm.reset();
           await this.getAdresses();
           this.spinner.hide();
-        });
+          this.toastr.success('Address added successfully', 'Successful');
+        }).catch(err => this.toastr.error(err.message, 'Error'));
       }
     }
   }

@@ -1,3 +1,4 @@
+import { ToastrModule } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { CustomerGrievenceRoutingModule } from './customer-grievence-routing.module';
@@ -17,7 +18,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     CustomerGrievenceRoutingModule,
     CKEditorModule,
     AngularFirestoreModule,
-    FormsModule
+    FormsModule,
+    ToastrModule
   ]
 })
 export class CustomerGrievenceModule { }

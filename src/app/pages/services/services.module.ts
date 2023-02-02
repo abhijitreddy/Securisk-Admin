@@ -1,3 +1,4 @@
+import { ToastrModule } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ServicesRoutingModule } from './services-routing.module';
@@ -17,7 +18,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     ServicesRoutingModule,
     CKEditorModule,
     AngularFirestoreModule,
-    FormsModule
+    FormsModule,
+    ToastrModule
   ]
 })
 export class ServicesModule { }

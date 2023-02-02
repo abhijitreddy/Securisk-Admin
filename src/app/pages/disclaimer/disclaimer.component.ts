@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -13,7 +14,7 @@ export class DisclaimerComponent implements OnInit {
   public data: any = '';
   public id: any = '';
 
-  constructor(private afs: AngularFirestore, private spinner: NgxSpinnerService) { }
+  constructor(private afs: AngularFirestore, private spinner: NgxSpinnerService, private toastr: ToastrService) { }
 
   async ngOnInit() {
       await this.getDisclaimer();
@@ -36,13 +37,21 @@ export class DisclaimerComponent implements OnInit {
         this.afs.collection('disclaimer').doc(this.id).update(reqData).then(async res => {
           await this.getDisclaimer();
           this.spinner.hide();
-        }).catch(err => this.spinner.hide());
+          this.toastr.success('Disclaimer updated successfully', 'Successful');
+        }).catch(err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'Error');
+        });
       } else {
         this.spinner.show();
         this.afs.collection('disclaimer').add(reqData).then(async res => {
           await this.getDisclaimer();
           this.spinner.hide();
-        }).catch(err => this.spinner.hide());
+          this.toastr.success('Disclaimer added successfully', 'Successful');
+        }).catch(err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'Error');
+        });
       }
     }
   }

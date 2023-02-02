@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -53,7 +54,7 @@ export class LeadershipTeamComponent implements OnInit {
               twitter_link: res.twitterLink
             });
             this.selectedProfileImg = res.image;
-            this.memberForm.controls['profile_img'].disable();
+            if (this.selectedProfileImg && this.selectedProfileImg.name) this.memberForm.controls['profile_img'].disable();
           });
           instance.onDelete.subscribe(async res => await this.delete(res.id));
         }
@@ -76,7 +77,7 @@ export class LeadershipTeamComponent implements OnInit {
   public editId: string = '';
   public selectedProfileImg: any = {};
   
-  constructor(private fb: FormBuilder, private afs: AngularFirestore, private storage: AngularFireStorage, private spinner: NgxSpinnerService) { 
+  constructor(private fb: FormBuilder, private afs: AngularFirestore, private storage: AngularFireStorage, private spinner: NgxSpinnerService, private toastr: ToastrService) { 
     this.memberForm = this.fb.group({
       name: new FormControl('', [Validators.required]),
       designation: new FormControl('', [Validators.required]),
@@ -125,6 +126,10 @@ export class LeadershipTeamComponent implements OnInit {
     this.afs.collection('leadershipTeam').doc(id).delete().then(async res => {
       await this.getLeadershipTeam();
       this.spinner.hide();
+      this.toastr.success('Leadership member deleted successfully', 'Successful');
+    }).catch(err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'Error');
     });
   }
 
@@ -151,7 +156,7 @@ export class LeadershipTeamComponent implements OnInit {
     console.log(file);
     let data = new FormData();
     data.append(file.name, file);
-    let ref = this.storage.ref(`leadershipTeam/${this.memberForm.controls['name'].value ? (this.memberForm.controls['name'].value + extension) : file.name}`);
+    let ref = this.storage.ref(`leadershipTeam/${this.memberForm.controls['name'].value ? (this.memberForm.controls['name'].value + '.' + extension) : file.name}`);
     this.spinner.show();
     ref.put(file).then(async (uploadedData) => {
       const downloadUrl = await ref.getDownloadURL().toPromise();
@@ -162,7 +167,12 @@ export class LeadershipTeamComponent implements OnInit {
       };
       this.memberForm.controls['profile_img'].disable();
       this.spinner.hide();
-    }).catch(err => this.spinner.hide())
+      this.toastr.success('Image uploaded successfully', 'Successful');
+    }).catch(err => {
+      this.spinner.hide();
+      this.toastr.error(err.message, 'Error');
+      this.memberForm.controls['profile_img'].reset();
+    })
   }
 
   removeImg() {
@@ -206,6 +216,10 @@ export class LeadershipTeamComponent implements OnInit {
           this.memberForm.controls['profile_img'].enable();
           await this.getLeadershipTeam();
           this.spinner.hide();
+          this.toastr.success('Leadership member updated successfully', 'Successful');
+        }).catch(err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'Error');
         });
       } else {
         this.spinner.show();
@@ -215,6 +229,10 @@ export class LeadershipTeamComponent implements OnInit {
           this.memberForm.controls['profile_img'].enable();
           await this.getLeadershipTeam();
           this.spinner.hide();
+          this.toastr.success('Leadership member added successfully', 'Successful');
+        }).catch(err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'Error');
         });
       }
     }

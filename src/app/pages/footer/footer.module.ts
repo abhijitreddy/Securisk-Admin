@@ -1,3 +1,4 @@
+import { ToastrModule } from 'ngx-toastr';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,7 +19,8 @@ import { FooterComponent } from './footer.component';
     FormsModule,
     ReactiveFormsModule,
     CKEditorModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    ToastrModule
   ]
 })
 export class FooterModule { }

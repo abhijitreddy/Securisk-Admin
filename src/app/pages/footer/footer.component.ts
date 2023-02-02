@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
@@ -13,7 +14,7 @@ export class FooterComponent implements OnInit {
   public Editor = ClassicEditor;
   public footerForm: FormGroup;
   public id: any;
-  constructor(private fb: FormBuilder, private afs: AngularFirestore, private spinner: NgxSpinnerService) { 
+  constructor(private fb: FormBuilder, private afs: AngularFirestore, private spinner: NgxSpinnerService, private toastr: ToastrService) { 
     this.footerForm = this.fb.group({
       data: new FormControl('', [Validators.required]),
       fb_link: new FormControl(''),
@@ -56,13 +57,21 @@ export class FooterComponent implements OnInit {
         this.afs.collection('footer').doc(this.id).update(reqData).then(async res => {
           await this.getFooter();
           this.spinner.hide();
-        }).catch(err => this.spinner.hide());
+          this.toastr.success('Footer details updated successfully', 'Successful');
+        }).catch(err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'Error');
+        });
       } else {
         this.spinner.show();
         this.afs.collection('footer').add(reqData).then(async res => {
           await this.getFooter();
           this.spinner.hide();
-        }).catch(err => this.spinner.hide());
+          this.toastr.success('Footer details added successfully', 'Successful');
+        }).catch(err => {
+          this.spinner.hide();
+          this.toastr.error(err.message, 'Error');
+        });
       }
     }
   }
